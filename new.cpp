@@ -75,7 +75,7 @@ int main()
 		{
 			if(poll_fds[i].revents & POLLIN)
 			{
-				if(poll_fds[i].fd = server_fd)
+				if(poll_fds[i].fd == server_fd)
 				{
 					int client_fd = accept(server_fd,NULL,NULL);
 					//fcntl(client_fd,F_SETFL,O_NONBLOCK);
@@ -108,12 +108,12 @@ int main()
 				std::string response=
 					"HTTP/1.1 200 OK\r\n"
 					"Content-Type: text/html\r\n"
-					"Content-Length : 46\r\n"
+					"Content-Length: 46\r\n"
 					"\r\n"
 					"<html><body><h1>hello webserv?</h1></body></html>";
 				send(poll_fds[i].fd,response.c_str(),response.size(),0);
 				close(poll_fds[i].fd);
-				poll_fds.erase(poll_fds.begin() + 1);
+				poll_fds.erase(poll_fds.begin() + i);
 				--i;
 
 				}
